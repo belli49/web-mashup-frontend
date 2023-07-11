@@ -7,18 +7,15 @@ class TripList extends React.Component {
     super();
 
     this.state = {
-      placeList: [{ name: 'McD' },
-                  { name: 'BK' }],
     };
-
   }
 
 
   render() {
     return (
-      <div className="TripList">
-        {this.state.placeList.map((place) => {
-          return (<TripItem placeInfo={place}/>);
+      <div className="PlanList">
+        {this.props.placesList.map((place) => {
+          return (<TripItem key={place.name} placeInfo={place}/>);
         })}
       </div>
     );

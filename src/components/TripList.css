@@ -1,0 +1,7 @@
+.PlanList {
+  height: auto;
+  width: auto;
+
+  display: flex;
+  flex-direction: column;
+}
