@@ -1,123 +1,79 @@
-import React from "react";
-import logo from "./logo.svg";
-import axios from "axios";
-import TripList from "./components/TripList.js";
-import "./App.css";
+import React from 'react';
+import { Routes, Route, Link } from "react-router-dom";
+import './App.css';
+import NavBar from './components/NavBar';
+import ScheduleList from './components/ScheduleList';
+import ScheduleDetail from './components/ScheduleDetail';
+import ScheduleInfo from './components/ScheduleInfo'
+import WithNavigateSearchPage from './components/SearchPage';
+import WithNavigateScheduleList from './components/ScheduleList';
+
+const axios = require('axios');
 
 class App extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      placesList: [],
-    };
+    this.state ={
+      restaurants: [],
+    } 
 
-    this.getListOfPlaces = this.getListOfPlaces.bind(this);
+    this.ChangeScheduleListOnSearch = this.ChangeScheduleListOnSearch.bind(this);
   }
-
 
   // request list of restaurants by restaurant name
-  getListOfPlaces(place, transportation, startingTime, endingTime) {
-    console.log('Sending prompt', place);
+  ChangeScheduleListOnSearch(restaurantName) {
+    let newScheduleList;
 
-    let prompt = `Make a plan for a 1 day date in ${place}. Display the plan in a list, with each entry in the same line (with no newline characters or carriage returns), in the following format:
-
-"(entry number)#(place name)#(start time)#(end time)#(Description of what to do there);"
-
-example: "1#Zuihoden Mausoleum#9:00am#10:00am#Visit the final resting place of Date Masamune, one of Japan's most powerful feudal lords, and admire the intricate architecture and beautiful surroundings.;"`;
-
-  let listOfPlaces;
-
-  axios
-    .post("http://localhost:5000/ask", {
-      prompt: prompt,
+    axios.post('http://127.0.0.1:5000/result_list_by_name', {
+      restaurant_name: `${restaurantName}`
     })
-    .then((res) => {
-      console.log(res);
+      .then(res => {
+        console.log(res.data);
+        newScheduleList = res.data;
+        newScheduleList.forEach(el => {
+          if (el.congestion == -1) {
+            if (Math.random() > 0.85) el.congestion = 1;
+            else el.congestion = Math.floor(Math.random() * el.capacity)/el.capacity;
+          }
+          el.capacity = 20 + Math.floor(60 *Math.random());
+        })
 
-      let newPlacesList = res.data.message.content
-        .replace(/(\r\n|\n|\r)/gm, "")
-        .split(';')
-        .map((placeEntry) => {
-          let info = placeEntry.split('#');
-
-          return {
-            entryNumber: info[0],
-            name: info[1],
-            startTime: info[2],
-            endTime: info[3],
-            description: info[4],
-          };
-        });
-
-      console.log(newPlacesList);
-      this.setState({placesList: newPlacesList});
-    })
-    .then((err) => {
-      console.log(err);
-    });
+        this.setState({
+          restaurants: newScheduleList,
+        })
+      })
+      .then(err => {
+        console.log(err)
+      })
   }
-
-
-
-// TEST PURPOSES
-  test(inp) {
-    let newPlacesList = inp
-      .replace(/(\r\n|\n|\r)/gm, "")
-      .split(';')
-      .map((placeEntry) => {
-        let info = placeEntry.split('#');
-
-        return {
-          entryNumber: info[0],
-          name: info[1],
-          startTime: info[2],
-          endTime: info[3],
-          description: info[4],
-        };
-     });
-
-    console.log(newPlacesList);
-  }
-// TEST PURPOSES
-
+s
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <div className="InputArea">
-            <div className="InputEntry">
-              <div width={'10px'}>
-                <a>Location </a>
-              </div>
-              <input width={'25px'}/>
-            </div>
-
-            <div className="InputEntry">
-              <div width={'10px'}>
-                <a>Days </a>
-              </div>
-              <input width={'25px'}/>
-            </div>
-
-            <div className="InputEntry">
-              <div width={'10px'}>
-                <a>Budget </a>
-              </div>
-              <input width={'25px'}/>
-            </div>
-
-            <div>
-              <button onClick={() => this.getListOfPlaces(`Sendai`)}>
-                test
-              </button>
-            </div>
-          </div>
-
-          <TripList placesList={this.state.placesList}/>
-        </header>
+  return (
+    <div className="App">
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<WithNavigateSearchPage ChangeScheduleListOnSearch={this.ChangeScheduleListOnSearch} />} />
+        <Route path='/restaurants' element={<WithNavigateScheduleList ChangeScheduleListOnSearch={this.ChangeScheduleListOnSearch} restaurantArray={this.state.restaurants} />} >
+          <Route path='*'></Route>
+        </Route>
+        <Route path='/detail' element={<ScheduleDetail />} >
+          <Route path=':restaurantID' element={<ScheduleInfo restaurantArray={this.state.restaurants} />} />
+        </Route>
+        <Route 
+          path="*"
+          element={
+            <main style={{ padding: '1rem' }}>
+              <p>Schedule information not found!</p>
+            </main>
+          }
+        />
+      </Routes>
+      <div className='Footer'>
+          <a className='FooterText'>© Pedro Komessu</a>
       </div>
-    );
+    </div>
+  );
   }
 }
 

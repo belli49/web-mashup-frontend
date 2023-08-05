@@ -1,0 +1,157 @@
+@import "../App.css";
+
+.SearchPage {
+    background-image: url("https://cdn.pixabay.com/photo/2014/10/19/20/59/hamburger-494706_1280.jpg");
+    height: 70vh;
+}
+
+.SearchPageWrapper {
+    height: auto;
+    margin-top: 12vh;
+}
+
+.SearchTitle {
+    color: var(--sec);
+    margin-bottom: 10vh;
+}
+
+.TitleText {
+    font-size: 3rem;
+}
+
+.SearchArea {
+    width: 600px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: var(--sec);
+    margin: auto;
+}
+
+.InputWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    align-items: stretch;
+    box-sizing: border-box;
+    position: relative;
+    padding: 30px;
+}
+
+.InputFields {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+    margin-right: 16px;
+}
+
+.InputsTop {
+    margin-bottom: 13px;
+    height: auto;
+    display: flex;
+    gap: 13px;
+}
+
+.InputBot {
+    height: 40px;
+}
+
+.PlaceInput {
+    height: 20px;
+    width: 160px;
+    border-radius: 5px;
+
+    color: rgb(36, 35, 42);
+    font-size: 16px;
+    line-height: 20px;
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    background: rgb(251, 251, 251);
+    transition: all 0.1s ease 0s;
+}
+
+.PlaceInput:focus {
+    outline-color: #e52d27;
+    border: 2px solid;
+}
+
+.TypeInput {
+    width: 160px;
+    border-radius: 5px;
+
+    color: rgb(36, 35, 42);
+    font-size: 16px;
+    line-height: 20px;
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    background: rgb(251, 251, 251);
+    transition: all 0.1s ease 0s;
+}
+
+.TypeInput:focus {
+    outline-color: #e52d27;
+    border: 2px solid;
+}
+
+.Input {
+    height: 20px;
+    width: 370px;
+    border-radius: 5px;
+
+    color: rgb(36, 35, 42);
+    font-size: 16px;
+    line-height: 20px;
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    background: rgb(251, 251, 251);
+    transition: all 0.1s ease 0s;
+}
+
+.Input:focus {
+    outline-color: #e52d27;
+    border: 2px solid;
+}
+
+.Buttons {
+    float: right;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    gap: 13px;
+}
+
+.SearchButton:hover {
+    cursor: pointer;
+    background-color: var(--main);
+}
+
+.Button {
+    float: right;
+    width: 130px;
+    height: 40px;
+             
+    background-image: linear-gradient(to right, #e52d27 0%, #b31217  51%, #e52d27  100%);
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 5px;
+    display: block;
+    border: none;
+}
+
+.Button:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+                    
+                

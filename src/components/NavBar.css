@@ -1,11 +1,51 @@
-.TripItemEntry {
-  width: 300px;
-  height: auto;
+@import "../App.css";
 
-  border-style: solid;
-  border-radius: 10px;
-  margin-top: 20px;
+.NavBar {
+    background-color: var(--sec);
+    height: 60px;
+    border-bottom: 1px solid var(--sub);
+}
 
-  display: flex;
-  flex-direction: column;
+.NavWrapper {
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    flex-direction: row;
+    align-content: center;
+}
+
+.Icon {
+    height: 100%;
+    margin-top: 10px;
+}
+
+.Navigation {
+    height: 100%;
+    width: 50%;
+}
+
+.NavLinks {
+    margin-top: 0;
+    height: 98%;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+.NavButton, .NavButton:visited {
+    color: black;
+    background-color: var(--sec);
+    height: 100%;
+    line-height: 60px;
+    width: 80px;
+}
+
+.NavButton:hover {
+    border-bottom: 3px solid var(--main);
+}
+
+.blink, .blink:visited {
+    text-decoration: none;
 }

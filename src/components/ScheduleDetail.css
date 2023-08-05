@@ -1,0 +1,95 @@
+/* .basic_information {
+    background-color: aqua;
+    text-align: left;
+} */
+
+.ScheduleDetail {
+}
+
+.BackButtonArea {
+    position: relative;
+    width: 100%;
+    height: 30px;
+}
+
+.BackButton {
+    position: absolute;
+    left: 10vh;
+    margin-top: '10px';
+}
+
+.ImageBox {
+    flex-grow: 1;
+}
+
+.Icon {
+    height: 300px;
+    width: 300px;
+
+    overflow: hidden;
+}
+
+.ScheduleImage {
+    transform: translateX(-32%);
+}
+
+.CongestionInfo {
+    background-color: rgb(237, 237, 237);
+    height: 280px;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.CongestionInfoElements {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.ReservationButtonDiv {
+    margin: auto;
+    flex-grow: 1;
+}
+
+#reservation_button {
+
+}
+
+.InformationArea {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+.InformationAreaTitle {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.basic_table {
+    text-align: right;
+}
+
+.PageLinks {
+    text-align: center;
+}
+
+#bigDonut {
+    height: 200px; width: 200px;
+}
+
+#bigHole {
+    height: 125px; width: 125px;
+}
+
+.HoleText {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
