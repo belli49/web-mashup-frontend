@@ -17,7 +17,7 @@ class NavBar extends React.Component {
                 <nav className="NavWrapper">
                     <div className='Icon'>
                         <Link to='/'>
-                            <img width={"150"} src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Rakuten_Global_Brand_Logo.svg/1200px-Rakuten_Global_Brand_Logo.svg.png" />
+                          <img height={"50px"} src={require('./../logo.png')} />
                         </Link>
                     </div>
                     <div className='Navigation'>

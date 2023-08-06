@@ -33,7 +33,7 @@
     transform: translateX(-32%);
 }
 
-.CongestionInfo {
+.DetailInfo {
     background-color: rgb(237, 237, 237);
     height: 280px;
     width: 70%;
@@ -44,7 +44,7 @@
     margin-top: 10px;
 }
 
-.CongestionInfoElements {
+.DetailInfoElements {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -65,11 +65,14 @@
     display: flex;
     flex-direction: column;
     flex-grow: 2;
+    justify-content: center;
+    gap: 20px;
 }
 
 .InformationAreaTitle {
     font-size: x-large;
     font-weight: bold;
+    margin-bottom: 50px;
 }
 
 .basic_table {

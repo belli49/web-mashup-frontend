@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./ScheduleList.css";
 
@@ -8,43 +7,21 @@ class ScheduleList extends React.Component {
         super(props);
 
         this.state = {
-            colorPerPercent: ['green', 'lightgreen', 'yellow', 'orange', 'red'],
-            scheduleName: '',
+
         }
-
-        this.HandleInputChange = this.HandleInputChange.bind(this);
-        this.HandleSearchButtonClick = this.HandleSearchButtonClick.bind(this);
     }
 
-    HandleInputChange(evt) {
-        const val = evt.target.value;
-        this.setState({
-            scheduleName: val
-        });
-    }
-
-    HandleSearchButtonClick() {
-        console.log(`button clicked: ${this.state.scheduleName}`);
-        this.props.ChangeScheduleListOnSearch(this.state.scheduleName);
-        this.props.navigate(`/schedule/${this.state.scheduleName}`)
-    }
-    
     render () {
         return (
             <div className="ScheduleList">
-                <div className="SearchAreaList">
-                    <input className="InputList"
-                        value={this.state.scheduleName}
-                        onChange={evt => this.HandleInputChange(evt)}
-                    ></input>
-                    <button className="ButtonList"
-                        onClick={this.HandleSearchButtonClick}
-                    ><img height={"16px"} src="https://www.seekpng.com/png/full/920-9209972_magnifying-glass-png-white-search-icon-white-png.png"></img></button>
-                </div>
                 <div className="ScheduleArea">
+                    <div>
+                        <h3>Showing results for a {this.props.searchInfo.searchedScheduleType ? this.props.searchInfo.searchedScheduleType : 'Trip'} in {this.props.searchInfo.searchedSchedulePlace}</h3>
+                    </div>
                     <ul className="InfoList">
                         {
                             this.props.scheduleArray.map((d, idx) => {
+                              try {
                                 return (
                                     <li key={d.schedule_id} className="ListItem">
                                         <Link
@@ -54,7 +31,7 @@ class ScheduleList extends React.Component {
                                             <div className="ListItemBox">
                                                 <div className="ItemImageDiv">
                                                     <img className="ItemImage" 
-                                                    src={(d.googlemap_id.toString().length < 10) ? d.schedule_image : `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${d.schedule_image}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}></img>
+                                                    src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${d.googlemaps_info.candidates[0].photos[0].photo_reference}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}></img>
                                                 </div>
 
                                                 <div className="ItemInfoArea">
@@ -63,31 +40,13 @@ class ScheduleList extends React.Component {
                                                             {d.schedule_name.substring(0, 20)}
                                                         </a>
                                                         <a style={{fontSize: 'small'}}>
-                                                            Japanese Food
+                                                            Time: ~{parseInt(d.endTime) - parseInt(d.startTime)} hours
                                                         </a>
                                                     </div>
 
                                                     <div className="ListedItemInfo">
                                                         <div className="ScheduleInfo">
-                                                            <a>{ ((d.congestion == 1) ? "Wait Time: 10min" : "Available") }</a>
-                                                        </div>
-
-                                                        <div className="CongestionLevelBox">
-                                                            <div style={{marginBottom: '6px'}}>
-                                                                <a>Congestion</a>
-                                                            </div>
-
-                                                            <div className="donut"
-                                                                style={{background: 
-                                                                `conic-gradient(
-                                                                    ${this.state.colorPerPercent[Math.ceil(d.congestion * 5) - 1]} 0deg 
-                                                                    ${d.congestion * 360}deg, lightgrey 
-                                                                    ${d.congestion * 360}deg 360deg)`}}
-                                                            >
-                                                                <div className="hole">
-                                                                    <a className="holeNumber">{Math.floor(d.congestion * 100)}</a>
-                                                                </div>
-                                                            </div>
+                                                          <a>{d.startTime + '~' + d.endTime}</a>
                                                         </div>
                                                     </div>
 
@@ -98,7 +57,10 @@ class ScheduleList extends React.Component {
                                             </div>
                                         </Link>
                                     </li>
-                                )
+                                  )
+                                } catch (err) {
+                                  console.log(err);
+                                }
                             })
                         }
                     </ul>
@@ -108,9 +70,4 @@ class ScheduleList extends React.Component {
     }
 }
 
-function WithNavigateScheduleList(props) {
-    let navigate = useNavigate();
-    return <ScheduleList {...props} navigate={navigate} />
-}
-
-export default WithNavigateScheduleList;
+export default ScheduleList;
