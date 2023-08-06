@@ -8,12 +8,15 @@ import ScheduleInfo from './components/ScheduleInfo'
 import WithNavigateSearchPage from './components/SearchPage';
 import WithNavigateScheduleList from './components/ScheduleList';
 import axios from 'axios';
+import LoadingBar from 'react-top-loading-bar';
 
 class InsideApp extends React.Component {
   constructor() {
     super();
 
     this.state ={
+      progress: 0,
+
       searchInfo: {
         searchedScheduleType: 'placeholder type',
         searchedScheduleDate: 'placeholder date',
@@ -36,6 +39,7 @@ class InsideApp extends React.Component {
     } 
 
     this.ChangeScheduleListOnSearch = this.ChangeScheduleListOnSearch.bind(this);
+    this.setProgress = this.setProgress.bind(this);
   }
 
   // request list of restaurants by restaurant name
@@ -54,8 +58,12 @@ class InsideApp extends React.Component {
       searchedSchedulePlace: place,
     };
 
-    let listOfPlaces;
+    this.setProgress(10);
+    const loadingProgressUpdater = setInterval(() => {
+      this.setProgress(Math.min(90, this.state.progress + (90 - this.state.progress) * 0.05));
+    }, 100)
 
+    let listOfPlaces;
     axios
       .post("http://localhost:5000/ask", {
         prompt: prompt,
@@ -71,15 +79,34 @@ class InsideApp extends React.Component {
       })
       .then((err) => {
         console.log(err);
+        clearInterval(loadingProgressUpdater);
+        this.setProgress(100);
       })
-      .then(() => this.props.navigate('/schedule'));
-    }
+      .then(() => {
+        clearInterval(loadingProgressUpdater);
+        this.setProgress(100);
+        this.props.navigate('/schedule')
+      });
+  }
 
 
-    render() {
+  // update progress bar
+  setProgress(val) {
+    if (val < 0 || val > 100) return -1;
+    this.setState({progress: val});
+  }
+
+
+  render() {
     return (
       <div className="App">
         <NavBar />
+        <LoadingBar
+          color='#f11946'
+          height={3}
+          progress={this.state.progress}
+          onLoaderFinished={() => this.setProgress(0)}
+        />
         <Routes>
           <Route path='/' element={<WithNavigateSearchPage ChangeScheduleListOnSearch={this.ChangeScheduleListOnSearch} />} />
           <Route path='/schedule' element={<ScheduleList ChangeScheduleListOnSearch={this.ChangeScheduleListOnSearch} scheduleArray={this.state.placesList} searchInfo={this.state.searchInfo}/>} >
