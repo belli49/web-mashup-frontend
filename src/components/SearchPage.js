@@ -15,6 +15,7 @@ class SearchPage extends React.Component {
 
         this.HandleInputChange = this.HandleInputChange.bind(this);
         this.HandleSearchButtonClick = this.HandleSearchButtonClick.bind(this);
+        this.ClearSelections = this.ClearSelections.bind(this);
     }
 
     HandleInputChange(evt, type) {
@@ -42,6 +43,11 @@ class SearchPage extends React.Component {
     HandleSearchButtonClick() {
         console.log(`button clicked: ${this.state.scheduleName}`);
         this.props.ChangeScheduleListOnSearch(this.state.scheduleName, this.state.scheduleDate, this.state.scheduleType)
+    }
+
+    
+    ClearSelections() {
+      this.setState({scheduleDate: '', scheduleName: '', scheduleType: ''});
     }
 
     
@@ -76,7 +82,7 @@ class SearchPage extends React.Component {
                             </div>
                             <div className="Buttons">
                                 <div>
-                                    <button className="Button">Search Nearby</button>
+                                    <button className="Button" onClick={this.ClearSelections}>Clear</button>
                                 </div>
                                 <div>
                                     <button className="Button" onClick={this.HandleSearchButtonClick}>Search</button>
